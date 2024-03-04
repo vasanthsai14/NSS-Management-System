@@ -235,3 +235,78 @@ END;
 //
 
 DELIMITER ;
+Table Creation Statements:
+CREATE TABLE USERS (
+    username VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password VARCHAR(255),
+    userType ENUM('Volunteer','Team Leader','Guide','Administrator'),
+    PRIMARY KEY (username, email)
+);
+
+CREATE TABLE VOLUNTEERS (
+    EnrollmentID VARCHAR(20) NOT NULL,
+    FirstName VARCHAR(50),
+    MiddleName VARCHAR(50),
+    LastName VARCHAR(50),
+    Gender ENUM('Male','Female','Other'),
+    DateOfBirth DATE,
+    Branch VARCHAR(50),
+    NSSUnitNumber VARCHAR(50),
+    Community VARCHAR(50),
+    PhoneNumber VARCHAR(15),
+    EmailID VARCHAR(255),
+    AadharNumber VARCHAR(20),
+    Height DECIMAL(5,2),
+    Weight DECIMAL(5,2),
+    FatherName VARCHAR(100),
+    Address VARCHAR(255),
+    BloodGroup VARCHAR(5),
+    PRIMARY KEY (EnrollmentID),
+    FOREIGN KEY (EmailID) REFERENCES USERS(email)
+);
+
+CREATE TABLE ACTIVITY_DETAILS (
+    ActivityID INT NOT NULL,
+    Description TEXT,
+    Duration INT,
+    Organizer VARCHAR(100),
+    PRIMARY KEY (ActivityID)
+);
+
+CREATE TABLE ACTIVITY (
+    EnrollmentID VARCHAR(20) NOT NULL,
+    ActivityID INT NOT NULL,
+    Name VARCHAR(100),
+    Description TEXT,
+    Duration INT,
+    Organizer VARCHAR(100),
+    PRIMARY KEY (EnrollmentID, ActivityID),
+    FOREIGN KEY (ActivityID) REFERENCES ACTIVITY_DETAILS(ActivityID),
+    FOREIGN KEY (EnrollmentID) REFERENCES VOLUNTEERS(EnrollmentID)
+);
+
+CREATE TABLE ATTENDANCE_TRACKING (
+    EnrollmentID VARCHAR(20) NOT NULL,
+    EventID INT NOT NULL,
+    Date DATE,
+    CheckInTime TIME,
+    CheckOutTime TIME,
+    Location VARCHAR(100),
+    DailyHours INT,
+    PRIMARY KEY (EnrollmentID, EventID),
+    FOREIGN KEY (EnrollmentID) REFERENCES VOLUNTEERS(EnrollmentID),
+    FOREIGN KEY (EventID) REFERENCES ACTIVITY_DETAILS(ActivityID)
+);
+
+CREATE TABLE ATTENDANCE (
+    EnrollmentID VARCHAR(20) NOT NULL,
+    ActivityID INT NOT NULL,
+    Name VARCHAR(100),
+    Description TEXT,
+    Duration INT,
+    Organizer VARCHAR(100),
+    Completed_hours INT,
+    PRIMARY KEY (EnrollmentID, ActivityID),
+    FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ATTENDANCE_TRACKING(EnrollmentID, EventID)
+);
