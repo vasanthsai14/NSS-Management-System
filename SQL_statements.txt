@@ -1,0 +1,223 @@
+Enter password: *******
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 100
+Server version: 8.0.36 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbmslab            |
+| information_schema |
+| mysql              |
+| nss                |
+| performance_schema |
+| student            |
+| sys                |
++--------------------+
+7 rows in set (0.06 sec)
+
+mysql> USE NSS;
+Database changed
+mysql> SHOW TABLES;
++---------------------+
+| Tables_in_nss       |
++---------------------+
+| activity            |
+| activity_details    |
+| attendance          |
+| attendance_tracking |
+| users               |
+| volunteers          |
++---------------------+
+6 rows in set (0.00 sec)
+
+mysql> DESCRIBE USERS;
++----------+---------------------------------------------------------+------+-----+---------+-------+
+| Field    | Type                                                    | Null | Key | Default | Extra |
++----------+---------------------------------------------------------+------+-----+---------+-------+
+| username | varchar(50)                                             | NO   | PRI | NULL    |       |
+| email    | varchar(100)                                            | NO   | PRI | NULL    |       |
+| password | varchar(255)                                            | YES  |     | NULL    |       |
+| userType | enum('Volunteer','Team Leader','Guide','Administrator') | YES  |     | NULL    |       |
++----------+---------------------------------------------------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE VOLUNTEERS;
++---------------+-------------------------------+------+-----+---------+-------+
+| Field         | Type                          | Null | Key | Default | Extra |
++---------------+-------------------------------+------+-----+---------+-------+
+| EnrollmentID  | varchar(20)                   | NO   | PRI | NULL    |       |
+| FirstName     | varchar(50)                   | YES  |     | NULL    |       |
+| MiddleName    | varchar(50)                   | YES  |     | NULL    |       |
+| LastName      | varchar(50)                   | YES  |     | NULL    |       |
+| Gender        | enum('Male','Female','Other') | YES  |     | NULL    |       |
+| DateOfBirth   | date                          | YES  |     | NULL    |       |
+| Branch        | varchar(50)                   | YES  |     | NULL    |       |
+| NSSUnitNumber | varchar(50)                   | YES  |     | NULL    |       |
+| Community     | varchar(50)                   | YES  |     | NULL    |       |
+| PhoneNumber   | varchar(15)                   | YES  |     | NULL    |       |
+| EmailID       | varchar(255)                  | YES  | MUL | NULL    |       |
+| AadharNumber  | varchar(20)                   | YES  |     | NULL    |       |
+| Height        | decimal(5,2)                  | YES  |     | NULL    |       |
+| Weight        | decimal(5,2)                  | YES  |     | NULL    |       |
+| FatherName    | varchar(100)                  | YES  |     | NULL    |       |
+| Address       | varchar(255)                  | YES  |     | NULL    |       |
+| BloodGroup    | varchar(5)                    | YES  |     | NULL    |       |
++---------------+-------------------------------+------+-----+---------+-------+
+17 rows in set (0.00 sec)
+
+mysql> DESCRIBE ACTIVITY_DETAILS;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ActivityID  | int          | NO   | PRI | NULL    |       |
+| Description | text         | YES  |     | NULL    |       |
+| Duration    | int          | YES  |     | NULL    |       |
+| Organizer   | varchar(100) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> DESCRIBE ACTIVITY;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| EnrollmentID | varchar(20)  | NO   | PRI | NULL    |       |
+| ActivityID   | int          | NO   | PRI | NULL    |       |
+| Name         | varchar(100) | YES  |     | NULL    |       |
+| Description  | text         | YES  |     | NULL    |       |
+| Duration     | int          | YES  |     | NULL    |       |
+| Organizer    | varchar(100) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> DESCRIBE ATTENDANCE_TRACKING;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| EnrollmentID | varchar(20)  | NO   |     | NULL    |       |
+| EventID      | int          | NO   |     | NULL    |       |
+| Date         | date         | YES  |     | NULL    |       |
+| CheckInTime  | time         | YES  |     | NULL    |       |
+| CheckOutTime | time         | YES  |     | NULL    |       |
+| Location     | varchar(100) | YES  |     | NULL    |       |
+| DailyHours   | int          | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> DESCRIBE ATTENDANCE;
++-----------------+--------------+------+-----+---------+-------+
+| Field           | Type         | Null | Key | Default | Extra |
++-----------------+--------------+------+-----+---------+-------+
+| EnrollmentID    | varchar(20)  | NO   | PRI | NULL    |       |
+| ActivityID      | int          | NO   | PRI | NULL    |       |
+| Name            | varchar(100) | YES  |     | NULL    |       |
+| Description     | text         | YES  |     | NULL    |       |
+| Duration        | int          | YES  |     | NULL    |       |
+| Organizer       | varchar(100) | YES  |     | NULL    |       |
+| Completed_hours | int          | YES  |     | NULL    |       |
++-----------------+--------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM USERS;
++---------------+-------------------------+-------------+---------------+
+| username      | email                   | password    | userType      |
++---------------+-------------------------+-------------+---------------+
+| Abuthalha     | abu@gmail.com           | shifa       | Volunteer     |
+| Chandan Kumar | chandanbk@gmail.com     | chandan@123 | Volunteer     |
+| Chidvilas     | chiddy@gmail.com        | chidvichid  | Team Leader   |
+| Indushree     | indu@gmail.com          | vasanth     | Volunteer     |
+| M Sumit       | msumit789@gmail.com     | nehasumit   | Administrator |
+| Rajesh K      | rajesh12@gmail.com      | rajeshranga | Volunteer     |
+| Shruti Katke  | shruti@gmail.com        | vasanth     | Volunteer     |
+| Sowmya K N    | sowmyakn@gmail.com      | hitler      | Administrator |
+| Vasanth       | vasanthsai141@gmail.com | 123346      | Volunteer     |
++---------------+-------------------------+-------------+---------------+
+9 rows in set (0.00 sec)
+
+mysql> SELECT * FROM VOLUNTEERS;
++--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-----------------------------+------------+
+| EnrollmentID | FirstName | MiddleName | LastName | Gender | DateOfBirth | Branch | NSSUnitNumber | Community       | PhoneNumber | EmailID                 | AadharNumber  | Height | Weight | FatherName      | Address                     | BloodGroup |
++--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-----------------------------+------------+
+| 11           | Abu       | Thalha     | K M      | Male   | 2003-04-19  | ISE    | 1             | Muslim          | 123456780   | abu@gmail.com           | 7257124797435 | 185.00 |  75.00 | Mohammed        | Coorg                       | A-         |
+| 12           | M         | v          |  Sumit   | Male   | 2003-11-16  | ISE    | 1             | Lingayat        | 8310946231  | msumit789@gmail.com     | 123124        | 173.00 |  65.00 | M Bharat        | Bidar                       | B+         |
+| 13           | Rajesh    | K          | Gowda    | Male   | 2003-05-15  | ISE    | 3             | Gowda           | 7259175436  | rajesh12@gmail.com      | 7257124797431 | 170.00 |  64.00 | Krishnappa      | Nelamangala                 | AB+        |
+| 14           | Vasanth   | Sai        | T        | Male   | 2003-01-14  | ISE    | 3             | Social Service  | 7259175437  | vasanthsai141@gmail.com | 7257124797432 | 180.00 |  64.00 | Thirupathaiah T | Papareddy Palya , Bengaluru | A+         |
+| 15           | M M       | Chidvilas  | Chowdary | Male   | 2003-07-04  | ISE    | 3             | Chowdary        | 7259175678  | chiddy@gmail.com        | 725712479786  | 182.00 |  77.00 | Ramesh Jois     | Tirupati                    | O-         |
++--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-----------------------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ACTIVITY_DETAILS;
++------------+---------------------------------+----------+-------------------------+
+| ActivityID | Description                     | Duration | Organizer               |
++------------+---------------------------------+----------+-------------------------+
+|         10 | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |
+|         20 | Blood Donation Drive            |        2 | Mrs Nagashree S         |
+|         30 | Road Safety Awareness Programme |        5 | Mr Girish N             |
+|         40 | YFS Chhote Scientist            |       20 | Mrs Nagamani N Purohit  |
+|         50 | River Preservation Drive        |       15 | Dr Sowmya K N           |
+|         60 | Anti-Ragging Campaign           |        2 | Mrs Rekha P M           |
++------------+---------------------------------+----------+-------------------------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ACTIVITY;
++--------------+------------+------------------------+---------------------------------+----------+-------------------------+
+| EnrollmentID | ActivityID | Name                   | Description                     | Duration | Organizer               |
++--------------+------------+------------------------+---------------------------------+----------+-------------------------+
+| 11           |         30 | Abu Thalha K M         | Road Safety Awareness Programme |        5 | Mr Girish N             |
+| 12           |         10 | M Sumit                | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |
+| 12           |         55 | M Sumit                | Anti-Ragging Awareness campaign |       40 | Dr Sowmya K N           |
+| 13           |         50 | Rajesh K Gowda         | River Preservation Drive        |       15 | Dr Sowmya K N           |
+| 14           |         10 | Vasanth Sai T          | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |
+| 14           |         20 | Vasanth Sai T          | Blood Donation Drive            |        2 | Mrs Nagashree S         |
+| 14           |         40 | Vasanth Sai T          | YFS Chhote Scientist            |       20 | Mrs Nagamani N Purohit  |
+| 15           |         60 | M M Chidvilas Chowdary | Anti-Ragging Campaign           |        2 | Mrs Rekha P M           |
++--------------+------------+------------------------+---------------------------------+----------+-------------------------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ATTENDANCE_TRACKING;
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+| EnrollmentID | EventID | Date       | CheckInTime | CheckOutTime | Location                    | DailyHours |
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+| 14           |      20 | 2024-03-04 | 15:42:00    | 17:42:00     | Govt School , Mallathahalli |          2 |
+| 14           |      20 | 2024-03-09 | 17:43:00    | 23:43:00     | Govt School , Mallathahalli |          6 |
+| 14           |      20 | 2024-03-05 | 15:45:00    | 20:45:00     | Bengaluru                   |          5 |
+| 12           |      10 | 2024-03-02 | 00:47:00    | 23:47:00     | Hyderabad                   |         23 |
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+4 rows in set (0.05 sec)
+
+mysql> SELECT * FROM ATTENDANCE;
++--------------+------------+------------------------+---------------------------------+----------+-------------------------+-----------------+
+| EnrollmentID | ActivityID | Name                   | Description                     | Duration | Organizer               | Completed_hours |
++--------------+------------+------------------------+---------------------------------+----------+-------------------------+-----------------+
+| 11           |         30 | Abu Thalha K M         | Road Safety Awareness Programme |        5 | Mr Girish N             |               1 |
+| 12           |         10 | M Sumit                | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |               6 |
+| 13           |         50 | Rajesh K Gowda         | River Preservation Drive        |       15 | Dr Sowmya K N           |              10 |
+| 14           |         20 | Vasanth Sai T          | Blood Donation Drive            |        2 | Mrs Nagashree S         |               2 |
+| 14           |         40 | Vasanth Sai T          | YFS Chhote Scientist            |       20 | Mrs Nagamani N Purohit  |              18 |
+| 15           |         60 | M M Chidvilas Chowdary | Anti-Ragging Campaign           |        2 | Dr Rekha P M            |               2 |
++--------------+------------+------------------------+---------------------------------+----------+-------------------------+-----------------+
+6 rows in set (0.00 sec)
+
+mysql> SHOW TRIGGERS;
++------------------------+--------+---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------+------------------------+-----------------------------------------------------------------------------------------------------------------------+----------------+----------------------+----------------------+--------------------+
+| Trigger                | Event  | Table               | Statement                                                                                                                                                          | Timing | Created                | sql_mode
+                                                                                               | Definer        | character_set_client | collation_connection | Database Collation |
++------------------------+--------+---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------+------------------------+-----------------------------------------------------------------------------------------------------------------------+----------------+----------------------+----------------------+--------------------+
+| update_completed_hours | INSERT | attendance_tracking | BEGIN
+    UPDATE attendance
+    SET Completed_hours = Completed_hours + NEW.DailyHours
+    WHERE EnrollmentID = NEW.EnrollmentID AND ActivityID = NEW.EventID;
+END | AFTER  | 2024-03-02 15:40:50.98 | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION | root@localhost | cp850                | cp850_general_ci     | utf8mb4_0900_ai_ci |
++------------------------+--------+---------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+--------+------------------------+-----------------------------------------------------------------------------------------------------------------------+----------------+----------------------+----------------------+--------------------+
+1 row in set (0.06 sec)
+
+mysql>
