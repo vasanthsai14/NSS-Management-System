@@ -221,3 +221,17 @@ END | AFTER  | 2024-03-02 15:40:50.98 | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 1 row in set (0.06 sec)
 
 mysql>
+Trigger statement:
+DELIMITER //
+
+CREATE TRIGGER update_completed_hours
+AFTER INSERT ON attendance_tracking
+FOR EACH ROW
+BEGIN
+    UPDATE attendance
+    SET Completed_hours = Completed_hours + NEW.DailyHours
+    WHERE EnrollmentID = NEW.EnrollmentID AND ActivityID = NEW.EventID;
+END;
+//
+
+DELIMITER ;
