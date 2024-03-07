@@ -18,18 +18,105 @@ mysql> SHOW DATABASES;
 | dbmslab            |
 | information_schema |
 | mysql              |
-| nss                |
+| nss1                |
 | performance_schema |
 | student            |
 | sys                |
 +--------------------+
 7 rows in set (0.06 sec)
 
-mysql> USE NSS;
+mysql> USE NSS1;
 Database changed
+mysql> CREATE TABLE USERS (
+    ->     username VARCHAR(50) NOT NULL,
+    ->     email VARCHAR(100) NOT NULL,
+    ->     password VARCHAR(255),
+    ->     userType ENUM('Volunteer','Team Leader','Guide','Administrator'),
+    ->     PRIMARY KEY (username, email),
+    ->     INDEX (email)  -- Add an index on the email column
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE VOLUNTEERS (
+    ->     EnrollmentID VARCHAR(20) NOT NULL,
+    ->     FirstName VARCHAR(50),
+    ->     MiddleName VARCHAR(50),
+    ->     LastName VARCHAR(50),
+    ->     Gender ENUM('Male','Female','Other'),
+    ->     DateOfBirth DATE,
+    ->     Branch VARCHAR(50),
+    ->     NSSUnitNumber VARCHAR(50),
+    ->     Community VARCHAR(50),
+    ->     PhoneNumber VARCHAR(15),
+    ->     EmailID VARCHAR(255),
+    ->     AadharNumber VARCHAR(20),
+    ->     Height DECIMAL(5,2),
+    ->     Weight DECIMAL(5,2),
+    ->     FatherName VARCHAR(100),
+    ->     Address VARCHAR(255),
+    ->     BloodGroup VARCHAR(5),
+    ->     PRIMARY KEY (EnrollmentID),
+    ->     FOREIGN KEY (EmailID) REFERENCES USERS(email)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> DROP TABLE ACTIVITY_DETAILS;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> CREATE TABLE ACTIVITY_DETAILS (
+    ->     ActivityID INT NOT NULL,
+    ->     Description TEXT,
+    ->     Duration INT,
+    ->     Organizer VARCHAR(100),
+    ->     PRIMARY KEY (ActivityID)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>
+mysql> CREATE TABLE ACTIVITY (
+    ->     EnrollmentID VARCHAR(20) NOT NULL,
+    ->     ActivityID INT NOT NULL,
+    ->     Name VARCHAR(100),
+    ->     Description TEXT,
+    ->     Duration INT,
+    ->     Organizer VARCHAR(100),
+    ->     PRIMARY KEY (EnrollmentID, ActivityID),
+    ->     CONSTRAINT fk_activity FOREIGN KEY (ActivityID) REFERENCES ACTIVITY_DETAILS(ActivityID),
+    ->     CONSTRAINT fk_enrollment FOREIGN KEY (EnrollmentID) REFERENCES VOLUNTEERS(EnrollmentID)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql>
+mysql> CREATE TABLE ATTENDANCE_TRACKING (
+    ->     EnrollmentID VARCHAR(20) NOT NULL,
+    ->     EventID INT NOT NULL,
+    ->     Date DATE,
+    ->     CheckInTime TIME,
+    ->     CheckOutTime TIME,
+    ->     Location VARCHAR(100),
+    ->     DailyHours INT,
+    ->     CONSTRAINT fk_attendance_tracking_activity FOREIGN KEY (EnrollmentID, EventID) REFERENCES ACTIVITY(EnrollmentID, ActivityID)
+    -> );
+Query OK, 0 rows affected (0.06 sec)
+
+mysql>
+mysql> CREATE TABLE ATTENDANCE (
+    ->     EnrollmentID VARCHAR(20) NOT NULL,
+    ->     ActivityID INT NOT NULL,
+    ->     Name VARCHAR(100),
+    ->     Description TEXT,
+    ->     Duration INT,
+    ->     Organizer VARCHAR(100),
+    ->     Completed_hours INT,
+    ->     PRIMARY KEY (EnrollmentID, ActivityID),
+    ->     CONSTRAINT fk_attendance_activity_tracking FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ATTENDANCE_TRACKING(EnrollmentID, EventID)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
 mysql> SHOW TABLES;
 +---------------------+
-| Tables_in_nss       |
+| Tables_in_nss1      |
 +---------------------+
 | activity            |
 | activity_details    |
@@ -38,55 +125,10 @@ mysql> SHOW TABLES;
 | users               |
 | volunteers          |
 +---------------------+
-6 rows in set (0.00 sec)
+6 rows in set (0.02 sec)
 
-mysql> DESCRIBE USERS;
-+----------+---------------------------------------------------------+------+-----+---------+-------+
-| Field    | Type                                                    | Null | Key | Default | Extra |
-+----------+---------------------------------------------------------+------+-----+---------+-------+
-| username | varchar(50)                                             | NO   | PRI | NULL    |       |
-| email    | varchar(100)                                            | NO   | PRI | NULL    |       |
-| password | varchar(255)                                            | YES  |     | NULL    |       |
-| userType | enum('Volunteer','Team Leader','Guide','Administrator') | YES  |     | NULL    |       |
-+----------+---------------------------------------------------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
 
-mysql> DESCRIBE VOLUNTEERS;
-+---------------+-------------------------------+------+-----+---------+-------+
-| Field         | Type                          | Null | Key | Default | Extra |
-+---------------+-------------------------------+------+-----+---------+-------+
-| EnrollmentID  | varchar(20)                   | NO   | PRI | NULL    |       |
-| FirstName     | varchar(50)                   | YES  |     | NULL    |       |
-| MiddleName    | varchar(50)                   | YES  |     | NULL    |       |
-| LastName      | varchar(50)                   | YES  |     | NULL    |       |
-| Gender        | enum('Male','Female','Other') | YES  |     | NULL    |       |
-| DateOfBirth   | date                          | YES  |     | NULL    |       |
-| Branch        | varchar(50)                   | YES  |     | NULL    |       |
-| NSSUnitNumber | varchar(50)                   | YES  |     | NULL    |       |
-| Community     | varchar(50)                   | YES  |     | NULL    |       |
-| PhoneNumber   | varchar(15)                   | YES  |     | NULL    |       |
-| EmailID       | varchar(255)                  | YES  | MUL | NULL    |       |
-| AadharNumber  | varchar(20)                   | YES  |     | NULL    |       |
-| Height        | decimal(5,2)                  | YES  |     | NULL    |       |
-| Weight        | decimal(5,2)                  | YES  |     | NULL    |       |
-| FatherName    | varchar(100)                  | YES  |     | NULL    |       |
-| Address       | varchar(255)                  | YES  |     | NULL    |       |
-| BloodGroup    | varchar(5)                    | YES  |     | NULL    |       |
-+---------------+-------------------------------+------+-----+---------+-------+
-17 rows in set (0.00 sec)
-
-mysql> DESCRIBE ACTIVITY_DETAILS;
-+-------------+--------------+------+-----+---------+-------+
-| Field       | Type         | Null | Key | Default | Extra |
-+-------------+--------------+------+-----+---------+-------+
-| ActivityID  | int          | NO   | PRI | NULL    |       |
-| Description | text         | YES  |     | NULL    |       |
-| Duration    | int          | YES  |     | NULL    |       |
-| Organizer   | varchar(100) | YES  |     | NULL    |       |
-+-------------+--------------+------+-----+---------+-------+
-4 rows in set (0.00 sec)
-
-mysql> DESCRIBE ACTIVITY;
+mysql> DESCRIBE activity;
 +--------------+--------------+------+-----+---------+-------+
 | Field        | Type         | Null | Key | Default | Extra |
 +--------------+--------------+------+-----+---------+-------+
@@ -97,23 +139,20 @@ mysql> DESCRIBE ACTIVITY;
 | Duration     | int          | YES  |     | NULL    |       |
 | Organizer    | varchar(100) | YES  |     | NULL    |       |
 +--------------+--------------+------+-----+---------+-------+
-6 rows in set (0.00 sec)
+6 rows in set (0.01 sec)
 
-mysql> DESCRIBE ATTENDANCE_TRACKING;
-+--------------+--------------+------+-----+---------+-------+
-| Field        | Type         | Null | Key | Default | Extra |
-+--------------+--------------+------+-----+---------+-------+
-| EnrollmentID | varchar(20)  | NO   |     | NULL    |       |
-| EventID      | int          | NO   |     | NULL    |       |
-| Date         | date         | YES  |     | NULL    |       |
-| CheckInTime  | time         | YES  |     | NULL    |       |
-| CheckOutTime | time         | YES  |     | NULL    |       |
-| Location     | varchar(100) | YES  |     | NULL    |       |
-| DailyHours   | int          | YES  |     | NULL    |       |
-+--------------+--------------+------+-----+---------+-------+
-7 rows in set (0.00 sec)
+mysql> DESCRIBE activity_details;
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| ActivityID  | int          | NO   | PRI | NULL    |       |
+| Description | text         | YES  |     | NULL    |       |
+| Duration    | int          | YES  |     | NULL    |       |
+| Organizer   | varchar(100) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
 
-mysql> DESCRIBE ATTENDANCE;
+mysql> DESCRIBE attendance;
 +-----------------+--------------+------+-----+---------+-------+
 | Field           | Type         | Null | Key | Default | Extra |
 +-----------------+--------------+------+-----+---------+-------+
@@ -126,6 +165,65 @@ mysql> DESCRIBE ATTENDANCE;
 | Completed_hours | int          | YES  |     | NULL    |       |
 +-----------------+--------------+------+-----+---------+-------+
 7 rows in set (0.00 sec)
+
+mysql> DESCRIBE attendance_tracking;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| EnrollmentID | varchar(20)  | NO   | MUL | NULL    |       |
+| EventID      | int          | NO   |     | NULL    |       |
+| Date         | date         | YES  |     | NULL    |       |
+| CheckInTime  | time         | YES  |     | NULL    |       |
+| CheckOutTime | time         | YES  |     | NULL    |       |
+| Location     | varchar(100) | YES  |     | NULL    |       |
+| DailyHours   | int          | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> DESCRIBE users;
++----------+---------------------------------------------------------+------+-----+---------+-------+
+| Field    | Type                                                    | Null | Key | Default | Extra |
++----------+---------------------------------------------------------+------+-----+---------+-------+
+| username | varchar(50)                                             | NO   | PRI | NULL    |       |
+| email    | varchar(100)                                            | NO   | PRI | NULL    |       |
+| password | varchar(255)                                            | YES  |     | NULL    |       |
+| userType | enum('Volunteer','Team Leader','Guide','Administrator') | YES  |     | NULL    |       |
++----------+---------------------------------------------------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+SELECT
+    CONSTRAINT_NAME,
+    TABLE_NAME,
+    COLUMN_NAME,
+    REFERENCED_TABLE_NAME,
+    REFERENCED_COLUMN_NAME
+FROM
+    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE
+    TABLE_SCHEMA = 'nss1'
+    AND TABLE_NAME IN ('users', 'volunteers', 'activity', 'activity_details', 'attendance_tracking', 'attendance');
+
++---------------------------------+---------------------+--------------+-----------------------+------------------------+
+| CONSTRAINT_NAME                 | TABLE_NAME          | COLUMN_NAME  | REFERENCED_TABLE_NAME | REFERENCED_COLUMN_NAME |
++---------------------------------+---------------------+--------------+-----------------------+------------------------+
+| PRIMARY                         | activity            | EnrollmentID | NULL                  | NULL                   |
+| PRIMARY                         | activity            | ActivityID   | NULL                  | NULL                   |
+| fk_activity                     | activity            | ActivityID   | activity_details      | ActivityID             |
+| fk_enrollment                   | activity            | EnrollmentID | volunteers            | EnrollmentID           |
+| PRIMARY                         | activity_details    | ActivityID   | NULL                  | NULL                   |
+| PRIMARY                         | attendance          | EnrollmentID | NULL                  | NULL                   |
+| PRIMARY                         | attendance          | ActivityID   | NULL                  | NULL                   |
+| fk_attendance_activity_tracking | attendance          | EnrollmentID | attendance_tracking   | EnrollmentID           |
+| fk_attendance_activity_tracking | attendance          | ActivityID   | attendance_tracking   | EventID                |
+| fk_attendance_tracking_activity | attendance_tracking | EnrollmentID | activity              | EnrollmentID           |
+| fk_attendance_tracking_activity | attendance_tracking | EventID      | activity              | ActivityID             |
+| PRIMARY                         | users               | username     | NULL                  | NULL                   |
+| PRIMARY                         | users               | email        | NULL                  | NULL                   |
+| PRIMARY                         | volunteers          | EnrollmentID | NULL                  | NULL                   |
+| volunteers_ibfk_1               | volunteers          | EmailID      | users                 | email                  |
++---------------------------------+---------------------+--------------+-----------------------+------------------------+
+15 rows in set (0.01 sec)
+
 
 mysql> SELECT * FROM USERS;
 +---------------+-------------------------+-------------+---------------+
@@ -237,78 +335,113 @@ END;
 DELIMITER ;
 
 
-Table Creation Statements:
-CREATE TABLE USERS (
-    username VARCHAR(50) NOT NULL,
-    email VARCHAR(100) NOT NULL,
-    password VARCHAR(255),
-    userType ENUM('Volunteer','Team Leader','Guide','Administrator'),
-    PRIMARY KEY (username, email)
-);
+mysql> SELECT * FROM USERS;
++------------------------+-------------------------+-----------+---------------+
+| username               | email                   | password  | userType      |
++------------------------+-------------------------+-----------+---------------+
+| Girish N               | girish@gmail.com        | girish    | Administrator |
+| M M Chidvilas Chowdary | chiddy@gmail.com        | chidvilas | Volunteer     |
+| Rajesh K Gowda         | rajesh@gmail.com        | rajesh    | Volunteer     |
+| Sumit M                | msumit@gmail.com        | sumit     | Volunteer     |
+| vasanth_sai            | vasanthsai141@gmail.com | vasanth   | Volunteer     |
++------------------------+-------------------------+-----------+---------------+
+5 rows in set (0.00 sec)
 
-CREATE TABLE VOLUNTEERS (
-    EnrollmentID VARCHAR(20) NOT NULL,
-    FirstName VARCHAR(50),
-    MiddleName VARCHAR(50),
-    LastName VARCHAR(50),
-    Gender ENUM('Male','Female','Other'),
-    DateOfBirth DATE,
-    Branch VARCHAR(50),
-    NSSUnitNumber VARCHAR(50),
-    Community VARCHAR(50),
-    PhoneNumber VARCHAR(15),
-    EmailID VARCHAR(255),
-    AadharNumber VARCHAR(20),
-    Height DECIMAL(5,2),
-    Weight DECIMAL(5,2),
-    FatherName VARCHAR(100),
-    Address VARCHAR(255),
-    BloodGroup VARCHAR(5),
-    PRIMARY KEY (EnrollmentID),
-    FOREIGN KEY (EmailID) REFERENCES USERS(email)
-);
+mysql> SELECT * FROM activity;
++--------------+------------+-------------------------+---------------------------------+----------+---------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer     |
++--------------+------------+-------------------------+---------------------------------+----------+---------------+
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M |
+| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N   |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N |
++--------------+------------+-------------------------+---------------------------------+----------+---------------+
+3 rows in set (0.00 sec)
 
-CREATE TABLE ACTIVITY_DETAILS (
-    ActivityID INT NOT NULL,
-    Description TEXT,
-    Duration INT,
-    Organizer VARCHAR(100),
-    PRIMARY KEY (ActivityID)
-);
+mysql> delete from activity where enrollmentid=11;
+Query OK, 1 row affected (0.01 sec)
 
-CREATE TABLE ACTIVITY (
-    EnrollmentID VARCHAR(20) NOT NULL,
-    ActivityID INT NOT NULL,
-    Name VARCHAR(100),
-    Description TEXT,
-    Duration INT,
-    Organizer VARCHAR(100),
-    PRIMARY KEY (EnrollmentID, ActivityID),
-    FOREIGN KEY (ActivityID) REFERENCES ACTIVITY_DETAILS(ActivityID),
-    FOREIGN KEY (EnrollmentID) REFERENCES VOLUNTEERS(EnrollmentID)
-);
+mysql> SELECT * FROM activity;
++--------------+------------+-------------------------+---------------------------------+----------+---------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer     |
++--------------+------------+-------------------------+---------------------------------+----------+---------------+
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N |
++--------------+------------+-------------------------+---------------------------------+----------+---------------+
+2 rows in set (0.00 sec)
 
-CREATE TABLE ATTENDANCE_TRACKING (
-    EnrollmentID VARCHAR(20) NOT NULL,
-    EventID INT NOT NULL,
-    Date DATE,
-    CheckInTime TIME,
-    CheckOutTime TIME,
-    Location VARCHAR(100),
-    DailyHours INT,
-    PRIMARY KEY (EnrollmentID, EventID),
-    FOREIGN KEY (EnrollmentID) REFERENCES VOLUNTEERS(EnrollmentID),
-    FOREIGN KEY (EventID) REFERENCES ACTIVITY_DETAILS(ActivityID)
-);
+mysql> DELIMITER //
+mysql>
+mysql> CREATE TRIGGER update_completed_hours
+    -> AFTER INSERT ON attendance_tracking
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     UPDATE attendance
+    ->     SET Completed_hours = Completed_hours + NEW.DailyHours
+    ->     WHERE EnrollmentID = NEW.EnrollmentID AND ActivityID = NEW.EventID;
+    -> END;
+    -> //
+Query OK, 0 rows affected (0.02 sec)
 
-CREATE TABLE ATTENDANCE (
-    EnrollmentID VARCHAR(20) NOT NULL,
-    ActivityID INT NOT NULL,
-    Name VARCHAR(100),
-    Description TEXT,
-    Duration INT,
-    Organizer VARCHAR(100),
-    Completed_hours INT,
-    PRIMARY KEY (EnrollmentID, ActivityID),
-    FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ATTENDANCE_TRACKING(EnrollmentID, EventID)
-);
+mysql>
+mysql> DELIMITER ;
+mysql> select * from attendance_tracking;
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+| EnrollmentID | EventID | Date       | CheckInTime | CheckOutTime | Location                    | DailyHours |
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+| 13           |     600 | 2024-03-07 | 13:40:00    | 16:40:00     | Govt School , Mallathahalli |          3 |
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from attendance;
++--------------+------------+-------------------------+---------------------------------+----------+---------------+-----------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer     | Completed_hours |
++--------------+------------+-------------------------+---------------------------------+----------+---------------+-----------------+
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M |               0 |
+| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N   |               0 |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N |               3 |
++--------------+------------+-------------------------+---------------------------------+----------+---------------+-----------------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT * FROM activity;
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |
+| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |
+| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT * FROM activity;
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+| 10           |        300 | Vasanth Sai T           | Road Safety Awareness Campaign  |        5 | Mrs Nagashree S         |
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |
+| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |
+| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from attendance_tracking;
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+| EnrollmentID | EventID | Date       | CheckInTime | CheckOutTime | Location                    | DailyHours |
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+| 13           |     600 | 2024-03-07 | 13:40:00    | 16:40:00     | Govt School , Mallathahalli |          3 |
++--------------+---------+------------+-------------+--------------+-----------------------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from attendance;
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               | Completed_hours |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
+| 10           |        300 | Vasanth Sai T           | Road Safety Awareness Campaign  |        5 | Mrs Nagashree S         |               0 |
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |               0 |
+| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |               0 |
+| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |               0 |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |               3 |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
+5 rows in set (0.00 sec)
+
