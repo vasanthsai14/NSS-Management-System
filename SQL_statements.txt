@@ -226,83 +226,78 @@ WHERE
 
 
 mysql> SELECT * FROM USERS;
-+---------------+-------------------------+-------------+---------------+
-| username      | email                   | password    | userType      |
-+---------------+-------------------------+-------------+---------------+
-| Abuthalha     | abu@gmail.com           | shifa       | Volunteer     |
-| Chandan Kumar | chandanbk@gmail.com     | chandan@123 | Volunteer     |
-| Chidvilas     | chiddy@gmail.com        | chidvichid  | Team Leader   |
-| Indushree     | indu@gmail.com          | vasanth     | Volunteer     |
-| M Sumit       | msumit789@gmail.com     | nehasumit   | Administrator |
-| Rajesh K      | rajesh12@gmail.com      | rajeshranga | Volunteer     |
-| Shruti Katke  | shruti@gmail.com        | vasanth     | Volunteer     |
-| Sowmya K N    | sowmyakn@gmail.com      | hitler      | Administrator |
-| Vasanth       | vasanthsai141@gmail.com | 123346      | Volunteer     |
-+---------------+-------------------------+-------------+---------------+
-9 rows in set (0.00 sec)
++------------------------+-------------------------+-----------+---------------+
+| username               | email                   | password  | userType      |
++------------------------+-------------------------+-----------+---------------+
+| Girish N               | girish@gmail.com        | girish    | Administrator |
+| M M Chidvilas Chowdary | chiddy@gmail.com        | chidvilas | Volunteer     |
+| Rajesh K Gowda         | rajesh@gmail.com        | rajesh    | Volunteer     |
+| Sowmya K N             | sowmyakn@gmail.com      | sowmya    | Administrator |
+| Sumit M                | msumit@gmail.com        | sumit     | Volunteer     |
+| vasanth_sai            | vasanthsai141@gmail.com | vasanth   | Volunteer     |
++------------------------+-------------------------+-----------+---------------+
+6 rows in set (0.01 sec)
 
 mysql> SELECT * FROM VOLUNTEERS;
-+--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-----------------------------+------------+
-| EnrollmentID | FirstName | MiddleName | LastName | Gender | DateOfBirth | Branch | NSSUnitNumber | Community       | PhoneNumber | EmailID                 | AadharNumber  | Height | Weight | FatherName      | Address                     | BloodGroup |
-+--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-----------------------------+------------+
-| 11           | Abu       | Thalha     | K M      | Male   | 2003-04-19  | ISE    | 1             | Muslim          | 123456780   | abu@gmail.com           | 7257124797435 | 185.00 |  75.00 | Mohammed        | Coorg                       | A-         |
-| 12           | M         | v          |  Sumit   | Male   | 2003-11-16  | ISE    | 1             | Lingayat        | 8310946231  | msumit789@gmail.com     | 123124        | 173.00 |  65.00 | M Bharat        | Bidar                       | B+         |
-| 13           | Rajesh    | K          | Gowda    | Male   | 2003-05-15  | ISE    | 3             | Gowda           | 7259175436  | rajesh12@gmail.com      | 7257124797431 | 170.00 |  64.00 | Krishnappa      | Nelamangala                 | AB+        |
-| 14           | Vasanth   | Sai        | T        | Male   | 2003-01-14  | ISE    | 3             | Social Service  | 7259175437  | vasanthsai141@gmail.com | 7257124797432 | 180.00 |  64.00 | Thirupathaiah T | Papareddy Palya , Bengaluru | A+         |
-| 15           | M M       | Chidvilas  | Chowdary | Male   | 2003-07-04  | ISE    | 3             | Chowdary        | 7259175678  | chiddy@gmail.com        | 725712479786  | 182.00 |  77.00 | Ramesh Jois     | Tirupati                    | O-         |
-+--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-----------------------------+------------+
-5 rows in set (0.00 sec)
++--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-------------+------------+
+| EnrollmentID | FirstName | MiddleName | LastName | Gender | DateOfBirth | Branch | NSSUnitNumber | Community       | PhoneNumber | EmailID                 | AadharNumber  | Height | Weight | FatherName      | Address     | BloodGroup |
++--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-------------+------------+
+| 10           | Vasanth   | Sai        | T        | Male   | 2003-01-14  | ISE    | 3             | Social Service  | 7259175431  | vasanthsai141@gmail.com | 7257124797444 | 180.00 |  62.00 | Thirupathaiah T | Bengaluru   | A+         |
+| 11           | M         |            | Sumit    | Male   | 2003-11-16  | ISE    | 1             | Social Service  | 7259175455  | msumit@gmail.com        | 7211124797435 | 180.00 |  61.00 | Ramesh Jois     | Bidar       | B+         |
+| 12           | Rajesh    | K          | Gowda    | Male   | 2003-09-14  | ISE    | 1             | Charity Support | 8359175678  | rajesh@gmail.com        | 7200124797435 | 173.00 |  64.00 | Krishnappa      | Nelamangala | AB+        |
+| 13           | M M       | Chidvilas  | Chowdary | Male   | 2003-03-12  | ISE    | 3             | Social Service  | 7259175436  | chiddy@gmail.com        | 7257124797432 | 182.00 |  70.00 | Jagadish Reddy  | Tirupati    | AB+        |
++--------------+-----------+------------+----------+--------+-------------+--------+---------------+-----------------+-------------+-------------------------+---------------+--------+--------+-----------------+-------------+------------+
+4 rows in set (0.00 sec)
 
 mysql> SELECT * FROM ACTIVITY_DETAILS;
 +------------+---------------------------------+----------+-------------------------+
 | ActivityID | Description                     | Duration | Organizer               |
 +------------+---------------------------------+----------+-------------------------+
-|         10 | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |
-|         20 | Blood Donation Drive            |        2 | Mrs Nagashree S         |
-|         30 | Road Safety Awareness Programme |        5 | Mr Girish N             |
-|         40 | YFS Chhote Scientist            |       20 | Mrs Nagamani N Purohit  |
-|         50 | River Preservation Drive        |       15 | Dr Sowmya K N           |
-|         60 | Anti-Ragging Campaign           |        2 | Mrs Rekha P M           |
+|        100 | Plant Adoption Drive            |       10 | Mr Girish N             |
+|        200 | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |
+|        300 | Road Safety Awareness Campaign  |        5 | Mrs Nagashree S         |
+|        400 | YFS Chotte Scientist            |       20 | Mrs Nagamani Purohit    |
+|        500 | Mental Health Awareness Program |        4 | Mrs Rekha P M           |
+|        600 | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |
+|        700 | Employment Opportunities Survey |        3 | Mrs Sahana V            |
 +------------+---------------------------------+----------+-------------------------+
-6 rows in set (0.00 sec)
+7 rows in set (0.00 sec)
 
 mysql> SELECT * FROM ACTIVITY;
-+--------------+------------+------------------------+---------------------------------+----------+-------------------------+
-| EnrollmentID | ActivityID | Name                   | Description                     | Duration | Organizer               |
-+--------------+------------+------------------------+---------------------------------+----------+-------------------------+
-| 11           |         30 | Abu Thalha K M         | Road Safety Awareness Programme |        5 | Mr Girish N             |
-| 12           |         10 | M Sumit                | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |
-| 12           |         55 | M Sumit                | Anti-Ragging Awareness campaign |       40 | Dr Sowmya K N           |
-| 13           |         50 | Rajesh K Gowda         | River Preservation Drive        |       15 | Dr Sowmya K N           |
-| 14           |         10 | Vasanth Sai T          | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |
-| 14           |         20 | Vasanth Sai T          | Blood Donation Drive            |        2 | Mrs Nagashree S         |
-| 14           |         40 | Vasanth Sai T          | YFS Chhote Scientist            |       20 | Mrs Nagamani N Purohit  |
-| 15           |         60 | M M Chidvilas Chowdary | Anti-Ragging Campaign           |        2 | Mrs Rekha P M           |
-+--------------+------------+------------------------+---------------------------------+----------+-------------------------+
-8 rows in set (0.00 sec)
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+| 10           |        300 | Vasanth Sai T           | Road Safety Awareness Campaign  |        5 | Mrs Nagashree S         |
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |
+| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |
+| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |
+| 12           |        400 | Rajesh  K Gowda         | YFS Chotte Scientist            |       20 | Mrs Nagamani Purohit    |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
+6 rows in set (0.00 sec)
 
 mysql> SELECT * FROM ATTENDANCE_TRACKING;
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-| EnrollmentID | EventID | Date       | CheckInTime | CheckOutTime | Location                    | DailyHours |
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-| 14           |      20 | 2024-03-04 | 15:42:00    | 17:42:00     | Govt School , Mallathahalli |          2 |
-| 14           |      20 | 2024-03-09 | 17:43:00    | 23:43:00     | Govt School , Mallathahalli |          6 |
-| 14           |      20 | 2024-03-05 | 15:45:00    | 20:45:00     | Bengaluru                   |          5 |
-| 12           |      10 | 2024-03-02 | 00:47:00    | 23:47:00     | Hyderabad                   |         23 |
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-4 rows in set (0.05 sec)
++--------------+---------+------------+-------------+--------------+------------------------------+------------+
+| EnrollmentID | EventID | Date       | CheckInTime | CheckOutTime | Location                     | DailyHours |
++--------------+---------+------------+-------------+--------------+------------------------------+------------+
+| 13           |     600 | 2024-03-07 | 13:40:00    | 16:40:00     | Govt School , Mallathahalli  |          3 |
+| 10           |     500 | 2024-03-08 | 13:19:00    | 17:22:00     | Govt School , Kengeri        |          4 |
+| 11           |     100 | 2024-03-01 | 13:20:00    | 20:20:00     | JSSATEB                      |          7 |
+| 12           |     400 | 2024-03-09 | 13:22:00    | 16:36:00     | Govt School , Papareddypalya |          3 |
++--------------+---------+------------+-------------+--------------+------------------------------+------------+
+4 rows in set (0.00 sec)
 
 mysql> SELECT * FROM ATTENDANCE;
-+--------------+------------+------------------------+---------------------------------+----------+-------------------------+-----------------+
-| EnrollmentID | ActivityID | Name                   | Description                     | Duration | Organizer               | Completed_hours |
-+--------------+------------+------------------------+---------------------------------+----------+-------------------------+-----------------+
-| 11           |         30 | Abu Thalha K M         | Road Safety Awareness Programme |        5 | Mr Girish N             |               1 |
-| 12           |         10 | M Sumit                | Plant adoption                  |       10 | Mrs. Sukrutha C Basappa |               6 |
-| 13           |         50 | Rajesh K Gowda         | River Preservation Drive        |       15 | Dr Sowmya K N           |              10 |
-| 14           |         20 | Vasanth Sai T          | Blood Donation Drive            |        2 | Mrs Nagashree S         |               2 |
-| 14           |         40 | Vasanth Sai T          | YFS Chhote Scientist            |       20 | Mrs Nagamani N Purohit  |              18 |
-| 15           |         60 | M M Chidvilas Chowdary | Anti-Ragging Campaign           |        2 | Dr Rekha P M            |               2 |
-+--------------+------------+------------------------+---------------------------------+----------+-------------------------+-----------------+
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
+| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               | Completed_hours |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
+| 10           |        300 | Vasanth Sai T           | Road Safety Awareness Campaign  |        5 | Mrs Nagashree S         |               0 |
+| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |               4 |
+| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |               7 |
+| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |               0 |
+| 12           |        400 | Rajesh  K Gowda         | YFS Chotte Scientist            |       20 | Mrs Nagamani Purohit    |               3 |
+| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |               3 |
++--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
 6 rows in set (0.00 sec)
 
 mysql> SHOW TRIGGERS;
@@ -319,10 +314,8 @@ END | AFTER  | 2024-03-02 15:40:50.98 | ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 1 row in set (0.06 sec)
 
 mysql>
-
-Trigger statement:
-
 DELIMITER //
+
 CREATE TRIGGER update_completed_hours
 AFTER INSERT ON attendance_tracking
 FOR EACH ROW
@@ -332,116 +325,79 @@ BEGIN
     WHERE EnrollmentID = NEW.EnrollmentID AND ActivityID = NEW.EventID;
 END;
 //
+
 DELIMITER ;
 
+-- This query retrieves information about the activities a volunteer (EnrollmentID = '11') has participated in,
+-- including the activity ID, description, total duration, completed hours, and percentage of work done.
+SELECT 
+    a.ActivityID,
+    ad.Description AS ActivityDescription,
+    ad.Duration AS TotalDuration,
+    SUM(IFNULL(at.Completed_hours, 0)) AS CompletedHours,
+    (SUM(IFNULL(at.Completed_hours, 0)) / ad.Duration) * 100 AS PercentageOfWorkDone
+FROM 
+    ACTIVITY a
+JOIN 
+    ACTIVITY_DETAILS ad ON a.ActivityID = ad.ActivityID
+LEFT JOIN 
+    ATTENDANCE at ON a.EnrollmentID = at.EnrollmentID AND a.ActivityID = at.ActivityID
+WHERE 
+    a.EnrollmentID = '11'
+GROUP BY 
+    a.ActivityID;
 
-mysql> SELECT * FROM USERS;
-+------------------------+-------------------------+-----------+---------------+
-| username               | email                   | password  | userType      |
-+------------------------+-------------------------+-----------+---------------+
-| Girish N               | girish@gmail.com        | girish    | Administrator |
-| M M Chidvilas Chowdary | chiddy@gmail.com        | chidvilas | Volunteer     |
-| Rajesh K Gowda         | rajesh@gmail.com        | rajesh    | Volunteer     |
-| Sumit M                | msumit@gmail.com        | sumit     | Volunteer     |
-| vasanth_sai            | vasanthsai141@gmail.com | vasanth   | Volunteer     |
-+------------------------+-------------------------+-----------+---------------+
-5 rows in set (0.00 sec)
++------------+----------------------+---------------+----------------+----------------------+
+| ActivityID | ActivityDescription  | TotalDuration | CompletedHours | PercentageOfWorkDone |
++------------+----------------------+---------------+----------------+----------------------+
+|        100 | Plant Adoption Drive |            10 |              7 |              70.0000 |
+|        200 | Blood Donation Drive |             2 |              0 |               0.0000 |
++------------+----------------------+---------------+----------------+----------------------+
 
-mysql> SELECT * FROM activity;
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+
-| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer     |
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+
-| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M |
-| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N   |
-| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N |
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+
-3 rows in set (0.00 sec)
 
-mysql> delete from activity where enrollmentid=11;
-Query OK, 1 row affected (0.01 sec)
+-- This query retrieves all activities along with the count of volunteers participating in each activity.
+SELECT 
+    a.ActivityID,
+    ad.Description AS ActivityDescription,
+    COUNT(DISTINCT a.EnrollmentID) AS NumberOfVolunteers
+FROM 
+    ACTIVITY a
+JOIN 
+    ACTIVITY_DETAILS ad ON a.ActivityID = ad.ActivityID
+GROUP BY 
+    a.ActivityID, ad.Description;
 
-mysql> SELECT * FROM activity;
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+
-| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer     |
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+
-| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M |
-| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N |
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+
-2 rows in set (0.00 sec)
++------------+---------------------------------+--------------------+
+| ActivityID | ActivityDescription             | NumberOfVolunteers |
++------------+---------------------------------+--------------------+
+|        100 | Plant Adoption Drive            |                  1 |
+|        200 | Blood Donation Drive            |                  1 |
+|        300 | Road Safety Awareness Campaign  |                  1 |
+|        400 | YFS Chotte Scientist            |                  1 |
+|        500 | Mental Health Awareness Program |                  1 |
+|        600 | Anti-Ragging Campaign           |                  1 |
++------------+---------------------------------+--------------------+
 
-mysql> DELIMITER //
-mysql>
-mysql> CREATE TRIGGER update_completed_hours
-    -> AFTER INSERT ON attendance_tracking
-    -> FOR EACH ROW
-    -> BEGIN
-    ->     UPDATE attendance
-    ->     SET Completed_hours = Completed_hours + NEW.DailyHours
-    ->     WHERE EnrollmentID = NEW.EnrollmentID AND ActivityID = NEW.EventID;
-    -> END;
-    -> //
-Query OK, 0 rows affected (0.02 sec)
 
-mysql>
-mysql> DELIMITER ;
-mysql> select * from attendance_tracking;
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-| EnrollmentID | EventID | Date       | CheckInTime | CheckOutTime | Location                    | DailyHours |
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-| 13           |     600 | 2024-03-07 | 13:40:00    | 16:40:00     | Govt School , Mallathahalli |          3 |
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-1 row in set (0.00 sec)
+-- This query identifies volunteers who have participated in multiple activities by counting the distinct activities for each volunteer.
+SELECT 
+    v.EnrollmentID,
+    v.FirstName,
+    v.LastName,
+    COUNT(DISTINCT a.ActivityID) AS NumActivities
+FROM 
+    VOLUNTEERS v
+JOIN 
+    ACTIVITY a ON v.EnrollmentID = a.EnrollmentID-
+GROUP BY 
+    v.EnrollmentID, v.FirstName, v.LastName
+HAVING 
+    COUNT(DISTINCT a.ActivityID) > 1;
 
-mysql> select * from attendance;
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+-----------------+
-| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer     | Completed_hours |
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+-----------------+
-| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M |               0 |
-| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N   |               0 |
-| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N |               3 |
-+--------------+------------+-------------------------+---------------------------------+----------+---------------+-----------------+
-3 rows in set (0.00 sec)
-
-mysql> SELECT * FROM activity;
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
-| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               |
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
-| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |
-| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |
-| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |
-| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
-4 rows in set (0.01 sec)
-
-mysql> SELECT * FROM activity;
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
-| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               |
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
-| 10           |        300 | Vasanth Sai T           | Road Safety Awareness Campaign  |        5 | Mrs Nagashree S         |
-| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |
-| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |
-| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |
-| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+
-5 rows in set (0.00 sec)
-
-mysql> select * from attendance_tracking;
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-| EnrollmentID | EventID | Date       | CheckInTime | CheckOutTime | Location                    | DailyHours |
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-| 13           |     600 | 2024-03-07 | 13:40:00    | 16:40:00     | Govt School , Mallathahalli |          3 |
-+--------------+---------+------------+-------------+--------------+-----------------------------+------------+
-1 row in set (0.00 sec)
-
-mysql> select * from attendance;
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
-| EnrollmentID | ActivityID | Name                    | Description                     | Duration | Organizer               | Completed_hours |
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
-| 10           |        300 | Vasanth Sai T           | Road Safety Awareness Campaign  |        5 | Mrs Nagashree S         |               0 |
-| 10           |        500 | Vasanth Sai T           | Mental Health Awareness Program |        4 | Mrs Rekha P M           |               0 |
-| 11           |        100 | M  Sumit                | Plant Adoption Drive            |       10 | Mr Girish N             |               0 |
-| 11           |        200 | M  Sumit                | Blood Donation Drive            |        2 | Mrs. Sukrutha C Basappa |               0 |
-| 13           |        600 | M M Chidvilas  Chowdary | Anti-Ragging Campaign           |        2 | Dr Sowmya K N           |               3 |
-+--------------+------------+-------------------------+---------------------------------+----------+-------------------------+-----------------+
-5 rows in set (0.00 sec)
++--------------+-----------+----------+---------------+
+| EnrollmentID | FirstName | LastName | NumActivities |
++--------------+-----------+----------+---------------+
+| 10           | Vasanth   | T        |             2 |
+| 11           | M         | Sumit    |             2 |
++--------------+-----------+----------+---------------+
 
