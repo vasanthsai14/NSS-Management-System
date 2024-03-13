@@ -110,7 +110,7 @@ mysql> CREATE TABLE ATTENDANCE (
     ->     Organizer VARCHAR(100),
     ->     Completed_hours INT,
     ->     PRIMARY KEY (EnrollmentID, ActivityID),
-    ->     CONSTRAINT fk_attendance_activity_tracking FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ATTENDANCE_TRACKING(EnrollmentID, EventID)
+    ->     CONSTRAINT fk_attendance_activity_tracking FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ACTIVITY(EnrollmentID, EventID)
     -> );
 Query OK, 0 rows affected (0.03 sec)
 
