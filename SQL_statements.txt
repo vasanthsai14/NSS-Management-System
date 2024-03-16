@@ -211,8 +211,6 @@ WHERE
 | PRIMARY                         | attendance          | ActivityID   | NULL                  | NULL                   |
 | fk_attendance_activity_tracking | attendance          | EnrollmentID | attendance_tracking   | EnrollmentID           |
 | fk_attendance_activity_tracking | attendance          | ActivityID   | attendance_tracking   | EventID                |
-| fk_attendance_tracking_activity | attendance_tracking | EnrollmentID | activity              | EnrollmentID           |
-| fk_attendance_tracking_activity | attendance_tracking | EventID      | activity              | ActivityID             |
 | PRIMARY                         | users               | username     | NULL                  | NULL                   |
 | PRIMARY                         | users               | email        | NULL                  | NULL                   |
 | PRIMARY                         | volunteers          | EnrollmentID | NULL                  | NULL                   |
