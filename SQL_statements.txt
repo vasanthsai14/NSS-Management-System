@@ -61,9 +61,6 @@ mysql> CREATE TABLE VOLUNTEERS (
     -> );
 Query OK, 0 rows affected (0.06 sec)
 
-mysql> DROP TABLE ACTIVITY_DETAILS;
-Query OK, 0 rows affected (0.03 sec)
-
 mysql> CREATE TABLE ACTIVITY_DETAILS (
     ->     ActivityID INT NOT NULL,
     ->     Description TEXT,
@@ -96,7 +93,6 @@ mysql> CREATE TABLE ATTENDANCE_TRACKING (
     ->     CheckOutTime TIME,
     ->     Location VARCHAR(100),
     ->     DailyHours INT,
-    ->     CONSTRAINT fk_attendance_tracking_activity FOREIGN KEY (EnrollmentID, EventID) REFERENCES ACTIVITY(EnrollmentID, ActivityID)
     -> );
 Query OK, 0 rows affected (0.06 sec)
 
@@ -110,7 +106,7 @@ mysql> CREATE TABLE ATTENDANCE (
     ->     Organizer VARCHAR(100),
     ->     Completed_hours INT,
     ->     PRIMARY KEY (EnrollmentID, ActivityID),
-    ->     CONSTRAINT fk_attendance_activity_tracking FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ACTIVITY(EnrollmentID, EventID)
+    ->     CONSTRAINT fk_attendance_activity_tracking FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ACTIVITY(EnrollmentID, Activity ID)
     -> );
 Query OK, 0 rows affected (0.03 sec)
 
@@ -170,7 +166,7 @@ mysql> DESCRIBE attendance_tracking;
 +--------------+--------------+------+-----+---------+-------+
 | Field        | Type         | Null | Key | Default | Extra |
 +--------------+--------------+------+-----+---------+-------+
-| EnrollmentID | varchar(20)  | NO   | MUL | NULL    |       |
+| EnrollmentID | varchar(20)  | NO   |     | NULL    |       |
 | EventID      | int          | NO   |     | NULL    |       |
 | Date         | date         | YES  |     | NULL    |       |
 | CheckInTime  | time         | YES  |     | NULL    |       |
