@@ -93,6 +93,7 @@ mysql> CREATE TABLE ATTENDANCE_TRACKING (
     ->     CheckOutTime TIME,
     ->     Location VARCHAR(100),
     ->     DailyHours INT,
+    ->     CONSTRAINT fk_attendance_tracking_activity FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ACTIVITY(EnrollmentID, Activity ID)
     -> );
 Query OK, 0 rows affected (0.06 sec)
 
@@ -106,7 +107,7 @@ mysql> CREATE TABLE ATTENDANCE (
     ->     Organizer VARCHAR(100),
     ->     Completed_hours INT,
     ->     PRIMARY KEY (EnrollmentID, ActivityID),
-    ->     CONSTRAINT fk_attendance_activity_tracking FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ACTIVITY(EnrollmentID, Activity ID)
+    ->     CONSTRAINT fk_attendance_activity FOREIGN KEY (EnrollmentID, ActivityID) REFERENCES ACTIVITY(EnrollmentID, Activity ID)
     -> );
 Query OK, 0 rows affected (0.03 sec)
 
@@ -209,14 +210,16 @@ WHERE
 | PRIMARY                         | activity_details    | ActivityID   | NULL                  | NULL                   |
 | PRIMARY                         | attendance          | EnrollmentID | NULL                  | NULL                   |
 | PRIMARY                         | attendance          | ActivityID   | NULL                  | NULL                   |
-| fk_attendance_activity_tracking | attendance          | EnrollmentID | attendance_tracking   | EnrollmentID           |
-| fk_attendance_activity_tracking | attendance          | ActivityID   | attendance_tracking   | EventID                |
+| fk_attendance_activity          | attendance          | EnrollmentID | activity              | EnrollmentID           |
+| fk_attendance_activity          | attendance          | ActivityID   | activity              | ActivityID             |
+| fk_attendance_tracking_activity | attendance_tracking | EnrollmentID | activity              | EnrollmentID           |
+| fk_attendance_tracking_activity | attendance_tracking | EventID      | activity              | ActivityID             |
 | PRIMARY                         | users               | username     | NULL                  | NULL                   |
 | PRIMARY                         | users               | email        | NULL                  | NULL                   |
 | PRIMARY                         | volunteers          | EnrollmentID | NULL                  | NULL                   |
 | volunteers_ibfk_1               | volunteers          | EmailID      | users                 | email                  |
 +---------------------------------+---------------------+--------------+-----------------------+------------------------+
-15 rows in set (0.01 sec)
+15 rows in set (0.03 sec)
 
 
 mysql> SELECT * FROM USERS;
