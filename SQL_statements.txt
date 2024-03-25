@@ -455,3 +455,120 @@ mysql> SHOW PROCESSLIST;
 | 10 | root            | localhost:56399 | nss1 | Query   |      0 | init                   | SHOW PROCESSLIST |
 +----+-----------------+-----------------+------+---------+--------+------------------------+------------------+
 2 rows in set, 1 warning (0.00 sec)
+
+-- CREATE SP
+DELIMITER //
+
+CREATE PROCEDURE TotalVolunteersByNSSUnit()
+BEGIN
+    -- Declare variables
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE nssUnit VARCHAR(50);
+    DECLARE totalVolunteers INT;
+
+    -- Declare cursor for NSS unit numbers
+    DECLARE cur CURSOR FOR
+        SELECT DISTINCT NSSUnitNumber FROM VOLUNTEERS;
+
+    -- Declare continue handler
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Open the cursor
+    OPEN cur;
+
+    -- Start looping through NSS unit numbers
+    read_loop: LOOP
+        -- Fetch the next NSS unit number
+        FETCH cur INTO nssUnit;
+        IF done THEN
+            LEAVE read_loop;
+        END IF;
+
+        -- Calculate the total number of volunteers for the current NSS unit number
+        SELECT COUNT(*) INTO totalVolunteers
+        FROM VOLUNTEERS
+        WHERE NSSUnitNumber = nssUnit;
+
+        -- Output the NSS unit number and total number of volunteers
+        SELECT nssUnit AS NSSUnitNumber, totalVolunteers AS TotalVolunteers;
+    END LOOP;
+
+    -- Close the cursor
+    CLOSE cur;
+END//
+
+DELIMITER ;
+
+-- INPUT STATEMENT
+-- To call the stored procedure, use the following statement:
+ CALL NSS1.TotalVolunteersByNSSUnit();
+
+-- SHOW ALL STORED PROCEDURES
+SHOW PROCEDURE STATUS WHERE Db = 'NSS1';
+
+mysql> DELIMITER //
+mysql> CREATE PROCEDURE TotalVolunteersByNSSUnit()
+    -> BEGIN
+    ->     -- Declare variables
+    ->     DECLARE done INT DEFAULT FALSE;
+    ->     DECLARE nssUnit VARCHAR(50);
+    ->     DECLARE totalVolunteers INT;
+    ->
+    ->     -- Declare cursor for NSS unit numbers
+    ->     DECLARE cur CURSOR FOR
+    ->         SELECT DISTINCT NSSUnitNumber FROM VOLUNTEERS;
+    ->
+    ->     -- Declare continue handler
+    ->     DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+    ->
+    ->     -- Open the cursor
+    ->     OPEN cur;
+    ->
+    ->     -- Start looping through NSS unit numbers
+    ->     read_loop: LOOP
+    ->         -- Fetch the next NSS unit number
+    ->         FETCH cur INTO nssUnit;
+    ->         IF done THEN
+    ->             LEAVE read_loop;
+    ->         END IF;
+    ->
+    ->         -- Calculate the total number of volunteers for the current NSS unit number
+    ->         SELECT COUNT(*) INTO totalVolunteers
+    ->         FROM VOLUNTEERS
+    ->         WHERE NSSUnitNumber = nssUnit;
+    ->
+    ->         -- Output the NSS unit number and total number of volunteers
+    ->         SELECT nssUnit AS NSSUnitNumber, totalVolunteers AS TotalVolunteers;
+    ->     END LOOP;
+    ->
+    ->     -- Close the cursor
+    ->     CLOSE cur;
+    -> END//
+Query OK, 0 rows affected (0.01 sec)
+mysql> DELIMITER ;
+mysql> CALL NSS1.TotalVolunteersByNSSUnit();
++---------------+-----------------+
+| NSSUnitNumber | TotalVolunteers |
++---------------+-----------------+
+| 3             |               3 |
++---------------+-----------------+
+1 row in set (0.00 sec)
+
++---------------+-----------------+
+| NSSUnitNumber | TotalVolunteers |
++---------------+-----------------+
+| 1             |               2 |
++---------------+-----------------+
+1 row in set (0.01 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SHOW PROCEDURE STATUS WHERE Db = 'NSS1';
++------+--------------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| Db   | Name                     | Type      | Definer        | Modified            | Created             | Security_type | Comment | character_set_client | collation_connection | Database Collation |
++------+--------------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+| nss1 | TotalVolunteersByNSSUnit | PROCEDURE | root@localhost | 2024-03-25 13:29:10 | 2024-03-25 13:29:10 | DEFINER       |         | cp850                | cp850_general_ci     | utf8mb4_0900_ai_ci |
++------+--------------------------+-----------+----------------+---------------------+---------------------+---------------+---------+----------------------+----------------------+--------------------+
+1 row in set (0.00 sec)
+
+mysql>
