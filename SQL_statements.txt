@@ -1,3 +1,28 @@
+SHOW DATABASES;
+USE NSS1;
+SHOW TABLES;
+
+-- Describe all tables
+DESCRIBE USERS;
+DESCRIBE VOLUNTEERS;
+DESCRIBE ACTIVITY_DETAILS;
+DESCRIBE ACTIVITY;
+DESCRIBE ATTENDANCE_TRACKING;
+DESCRIBE ATTENDANCE;
+
+-- Select all rows from all tables
+SELECT * FROM USERS;
+SELECT * FROM VOLUNTEERS;
+SELECT * FROM ACTIVITY_DETAILS;
+SELECT * FROM ACTIVITY;
+SELECT * FROM ATTENDANCE_TRACKING;
+SELECT * FROM ATTENDANCE;
+
+-- Show all triggers
+SHOW TRIGGERS;
+
+SHOW PROCESSLIST;
+
 Enter password: *******
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 100
@@ -422,3 +447,11 @@ HAVING
 | 11           | M         | Sumit    |             2 |
 +--------------+-----------+----------+---------------+
 
+mysql> SHOW PROCESSLIST;
++----+-----------------+-----------------+------+---------+--------+------------------------+------------------+
+| Id | User            | Host            | db   | Command | Time   | State                  | Info             |
++----+-----------------+-----------------+------+---------+--------+------------------------+------------------+
+|  5 | event_scheduler | localhost       | NULL | Daemon  | 473514 | Waiting on empty queue | NULL             |
+| 10 | root            | localhost:56399 | nss1 | Query   |      0 | init                   | SHOW PROCESSLIST |
++----+-----------------+-----------------+------+---------+--------+------------------------+------------------+
+2 rows in set, 1 warning (0.00 sec)
